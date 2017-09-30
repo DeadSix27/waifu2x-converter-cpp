@@ -155,7 +155,8 @@ int main(int argc, char** argv) {
 	if (outputFileName == "(auto)") {
 		outputFileName = cmdInputFile.getValue();
 		int tailDot = outputFileName.find_last_of('.');
-		outputFileName.erase(tailDot, outputFileName.length());
+		if(tailDot != std::string::npos)
+			outputFileName.erase(tailDot, outputFileName.length());
 		outputFileName = outputFileName + "(" + cmdMode.getValue() + ")";
 		std::string &mode = cmdMode.getValue();
 		if(mode.find("noise") != mode.npos){
@@ -168,6 +169,8 @@ int main(int argc, char** argv) {
 		}
 		outputFileName += ".png";
 	}
+	else if (outputFileName.find_last_of('.') == std::string::npos)
+		outputFileName += ".png";
 
 	enum W2XConvGPUMode gpu = W2XCONV_GPU_AUTO;
 
