@@ -15,9 +15,12 @@ static void *handle;
 #endif
 
 #ifdef HAVE_CUDA
+#include <cuda_runtime_api.h>
+#if CUDART_VERSION < 9000
 static const char prog20[] = 
 #include "modelHandler_CUDA.ptx20.h"
 	;
+#endif // CUDART_VERSION < 9000
 static const char prog30[] = 
 #include "modelHandler_CUDA.ptx30.h"
 	;
@@ -136,10 +139,12 @@ initCUDA(ComputeEnv *env, int dev_id)
 		return false;
 	}
 
-	const char *prog = prog20;
-	if (cap_major >= 3) {
-		prog = prog30;
+	const char *prog = prog30;
+#if CUDART_VERSION < 9000
+	if (cap_major < 3) {
+		prog = prog20;
 	}
+#endif
 
 	r = cuStreamCreate(&stream, 0);
 	if (r != CUDA_SUCCESS) {
