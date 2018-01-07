@@ -1173,7 +1173,7 @@ read_int2(FILE *fp) {
 
 //This checks if the file type is png, it defalts to the user inputted bkgd_colour otherwise.
 //The returning bool is whether the function excecuted successfully or not.
-void get_png_background_colour(FILE *png_fp, bool *png_rgb, struct float3 *bkgd_colour){
+void get_png_background_colour(FILE *png_fp, bool *png_rgb, struct w2xconv_rgb_float3 *bkgd_colour){
 	*png_rgb = false;
 	//png file signature
 	const static unsigned char png[] = {0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
@@ -1288,7 +1288,7 @@ w2xconv_convert_file(struct W2XConv *conv,
 	bool png_rgb;
 	//Background colour
 	//float3 background(1.0f, 1.0f, 1.0f);
-	float3 background;
+	struct w2xconv_rgb_float3 background;
 	background.r = background.g = background.b = 1.0f;
 	get_png_background_colour(png_fp, &png_rgb, &background);
 

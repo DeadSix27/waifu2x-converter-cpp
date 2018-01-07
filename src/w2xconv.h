@@ -152,7 +152,7 @@ struct W2XConv {
 	struct W2XConvImpl *impl;
 };
 
-struct float3 {
+struct w2xconv_rgb_float3 {
 	float r;
 	float g;
 	float b;
@@ -161,7 +161,7 @@ struct float3 {
 };
 
 //TODO: what does W2XCONV_EXPORT do?
-W2XCONV_EXPORT	void get_png_background_colour(FILE *png_fp, bool *png_rgb, struct float3 *bkgd_colour);
+W2XCONV_EXPORT	void get_png_background_colour(FILE *png_fp, bool *png_rgb, struct w2xconv_rgb_float3 *bkgd_colour);
 
 W2XCONV_EXPORT const struct W2XConvProcessor *w2xconv_get_processor_list(int *ret_num);
 
