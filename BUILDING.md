@@ -93,6 +93,24 @@ cmake ..
 make -j4
 sudo make install
 ```
+### Alternative build _only_ if the above doesn't work:
+Run these commands in order:
+```cmd
+git clone "https://github.com/DeadSix27/waifu2x-converter-cpp"
+cd waifu2x-converter-cpp
+```
+Now edit `CMakeLists.txt` (root of the project):  
+- Add as the 2nd line:  
+  - `set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")`
+- save and exit.
+
+Now, run these commands in order:
+```cmd
+mkdir out && cd out
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DINSTALL_MODELS=1 ..
+make -j4
+sudo make install
+```
 
 # MacOS / OSX
 
