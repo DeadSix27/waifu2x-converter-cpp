@@ -1,0 +1,85 @@
+[vgg_7]
+scale_factor:1 channels:3 offset:7
+Phase 00: nn.SpatialConvolutionMM 3->32 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 01: nn.SpatialConvolutionMM 32->32 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 02: nn.SpatialConvolutionMM 32->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 03: nn.SpatialConvolutionMM 64->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 04: nn.SpatialConvolutionMM 64->128 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 05: nn.SpatialConvolutionMM 128->128 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 06: nn.SpatialConvolutionMM 128->3 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+
+[upconv_7]
+scale_factor:2 channels:3 offset:14 resize:true
+Phase 00: nn.SpatialConvolutionMM 3->16 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 01: nn.SpatialConvolutionMM 16->32 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 02: nn.SpatialConvolutionMM 32->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 03: nn.SpatialConvolutionMM 64->128 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 04: nn.SpatialConvolutionMM 128->128 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 05: nn.SpatialConvolutionMM 128->256 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 06: nn.SpatialFullConvolution 256->3 dH:2 dW:2 kW:4 kH:4 padW:3 padH:3
+
+[cunet]
+scale_factor:1 channels:3 offset:28 resize:false created_at: "2018-11-12T16:16:36Z"
+Phase 00: nn.SpatialConvolutionMM 3->32 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 01: nn.SpatialConvolutionMM 32->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 02: nn.SpatialConvolutionMM 64->64 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 03: nn.SpatialConvolutionMM 64->128 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 04: nn.SpatialConvolutionMM 128->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 05: nn.SpatialConvolutionMM 64->8 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 06: nn.SpatialConvolutionMM 8->64 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 07: nn.SpatialFullConvolution 64->64 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 08: nn.SpatialConvolutionMM 64->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 09: nn.SpatialConvolutionMM 64->3 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 10: nn.SpatialConvolutionMM 3->32 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 11: nn.SpatialConvolutionMM 32->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 12: nn.SpatialConvolutionMM 64->64 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 13: nn.SpatialConvolutionMM 64->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 14: nn.SpatialConvolutionMM 64->128 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 15: nn.SpatialConvolutionMM 128->16 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 16: nn.SpatialConvolutionMM 16->128 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 17: nn.SpatialConvolutionMM 128->128 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 18: nn.SpatialConvolutionMM 128->256 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 19: nn.SpatialConvolutionMM 256->128 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 20: nn.SpatialConvolutionMM 128->16 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 21: nn.SpatialConvolutionMM 16->128 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 22: nn.SpatialFullConvolution 128->128 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 23: nn.SpatialConvolutionMM 128->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 24: nn.SpatialConvolutionMM 64->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 25: nn.SpatialConvolutionMM 64->8 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 26: nn.SpatialConvolutionMM 8->64 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 27: nn.SpatialFullConvolution 64->64 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 28: nn.SpatialConvolutionMM 64->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 29: nn.SpatialConvolutionMM 64->3 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+
+[upcunet]
+scale_factor:2 channels:3 offset:36 resize:true created_at: "2018-11-12T16:16:41Z"
+Phase 00: nn.SpatialConvolutionMM 3->32 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 01: nn.SpatialConvolutionMM 32->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 02: nn.SpatialConvolutionMM 64->64 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 03: nn.SpatialConvolutionMM 64->128 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 04: nn.SpatialConvolutionMM 128->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 05: nn.SpatialConvolutionMM 64->8 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 06: nn.SpatialConvolutionMM 8->64 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 07: nn.SpatialFullConvolution 64->64 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 08: nn.SpatialConvolutionMM 64->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 09: nn.SpatialFullConvolution 64->3 dH:2 dW:2 kW:4 kH:4 padW:3 padH:3
+Phase 10: nn.SpatialConvolutionMM 3->32 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 11: nn.SpatialConvolutionMM 32->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 12: nn.SpatialConvolutionMM 64->64 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 13: nn.SpatialConvolutionMM 64->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 14: nn.SpatialConvolutionMM 64->128 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 15: nn.SpatialConvolutionMM 128->16 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 16: nn.SpatialConvolutionMM 16->128 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 17: nn.SpatialConvolutionMM 128->128 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 18: nn.SpatialConvolutionMM 128->256 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 19: nn.SpatialConvolutionMM 256->128 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 20: nn.SpatialConvolutionMM 128->16 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 21: nn.SpatialConvolutionMM 16->128 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 22: nn.SpatialFullConvolution 128->128 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 23: nn.SpatialConvolutionMM 128->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 24: nn.SpatialConvolutionMM 64->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 25: nn.SpatialConvolutionMM 64->8 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 26: nn.SpatialConvolutionMM 8->64 dH:1 dW:1 kW:1 kH:1 padW:0 padH:0
+Phase 27: nn.SpatialFullConvolution 64->64 dH:2 dW:2 kW:2 kH:2 padW:0 padH:0
+Phase 28: nn.SpatialConvolutionMM 64->64 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
+Phase 29: nn.SpatialConvolutionMM 64->3 dH:1 dW:1 kW:3 kH:3 padW:0 padH:0
