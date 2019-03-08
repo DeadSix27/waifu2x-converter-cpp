@@ -15,7 +15,11 @@
 #include "sec.hpp"
 #include "CLlib.h"
 #include "params.h"
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+#else
 #include "CL/cl.h"
+#endif
 #include <experimental/filesystem>
 namespace fs = std::experimental::filesystem;
 

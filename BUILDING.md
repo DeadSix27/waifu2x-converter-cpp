@@ -117,13 +117,14 @@ If needed run `sudo ldconfig` after the install.
 
 # MacOS / OSX
 
-You need [Homebrew](https://brew.sh) installed, as well as XCode for the compiler.
-The following has been tested on OSX Sierra 10.12.6:
+You need [Homebrew](https://brew.sh) installed, as well as a newer llvm installed (since Xcode's llvm does not have
+ filesystem library)
 
+The following has been tested on macOS Mojave 10.14.3:
 ```
-$ brew tap science && brew install opencv3
+$ brew install llvm opencv
 $ git clone https://github.com/DeadSix27/waifu2x-converter-cpp && cd waifu2x-converter-cpp
-$ cmake -DOPENCV_PREFIX=/usr/local/Cellar/opencv3/<your version here> .
+$ cmake -DOPENCV_PREFIX=/usr/local/Cellar/opencv/<your version here> .
 $ make -j4
 $ cp -r models_rgb models
 ```

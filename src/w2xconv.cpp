@@ -438,6 +438,8 @@ clearError(W2XConv *conv)
 	case W2XCONV_ERROR_IMWRITE_FAILED:
 		free(conv->last_error.u.path);
 		break;
+	default:
+		break;
 	}
 }
 
@@ -450,6 +452,10 @@ w2xconv_strerror(W2XConvError *e)
 	switch (e->code) {
 	case W2XCONV_NOERROR:
 		oss << "no error";
+		break;
+
+	case W2XCONV_ERROR_OPENCL:
+		oss << "opencl_err: " << e->u.errno_;
 		break;
 
 	case W2XCONV_ERROR_WIN32_ERROR:
