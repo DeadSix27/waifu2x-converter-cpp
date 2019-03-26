@@ -468,7 +468,7 @@ void parse_supported_cv_formats()
 	// OpenEXR Image Files
 	opencv_formats["EXR"] = true;
 }
-void debug_show_opencv_formats()
+void display_supported_formats()
 {
 
 	std::cout << "This is a list of supported formats."
@@ -586,9 +586,9 @@ int wmain(void){
 			dump_procs();
 			return 0;
 		}
-			debug_show_opencv_formats();
 		else if ((wcscmp(argv_w[ai], L"--list-opencv-formats") == 0) || (wcscmp(argv_w[ai], L"--list-supported-formats") == 0)) {
 			parse_supported_cv_formats();
+			display_supported_formats();
 			return 0;
 		}
 	}
@@ -866,9 +866,9 @@ int main(int argc, char** argv) {
 			dump_procs();
 			return 0;
 		}
-			debug_show_opencv_formats();
 		if (strcmp(argv[ai], "--list-opencv-formats") == 0 || strcmp(argv[ai], "--list-supported-formats") == 0) {
 			parse_supported_cv_formats();
+			display_supported_formats();
 			return 0;
 		}
 	}
