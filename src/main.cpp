@@ -473,11 +473,12 @@ void display_supported_formats()
 
 	std::cout << "This is a list of supported formats."
 	#ifdef HAVE_OPENCV
-			" This list depends on which formats opencv has been built with."
+			" OpenCV is available, so this list depends on which formats opencv has been built with."
 	#else
-			" OpenCV is disabled (recompile to enable), so only the default formats can be used"
+			" OpenCV is unavailable (recompile to enable), so only the default formats can be used"
 	#endif
 			 << std::endl ;
+
 	for (auto const& x : supported_formats)
 	{
 		std::cout << "\t" << std::setw(4) << x.first << " -> " << (x.second ? "Yes" : "No") << std::endl ;
