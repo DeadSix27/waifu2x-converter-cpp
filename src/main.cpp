@@ -161,7 +161,7 @@ void check_for_errors(W2XConv* converter, int error) {
 }
 
 
-std::map<std::string,bool> opencv_formats = {
+std::map<std::string,bool> supported_formats = {
 	// Windows Bitmaps
 	{"BMP",  false},
 	{"DIB",  false},
@@ -207,8 +207,8 @@ bool validate_format_extension(std::string extension) {
 	for(std::string::iterator it = extension.begin(); it != extension.end(); ++it){
 		*it = std::toupper(*it);
 	}
-	auto index = opencv_formats.find(extension);
-	if (index != opencv_formats.end()) {
+	auto index = supported_formats.find(extension);
+	if (index != supported_formats.end()) {
 		return index->second;
 	}
 	return false;
@@ -419,54 +419,54 @@ void parse_supported_cv_formats()
 			// Portable Network Graphics
 			if ((strings[0] == "PNG"))
 			{
-				opencv_formats["PNG"] = strings[1] != "NO";
+				supported_formats["PNG"] = strings[1] != "NO";
 			}
 			// JPEG Files
 			else if ((strings[0] == "JPEG"))
 			{
-				opencv_formats["JPEG"] = (strings[1] != "NO");
-				opencv_formats["JPG"] = (strings[1] != "NO");
-				opencv_formats["JPE"] = (strings[1] != "NO");
+				supported_formats["JPEG"] = (strings[1] != "NO");
+				supported_formats["JPG"] = (strings[1] != "NO");
+				supported_formats["JPE"] = (strings[1] != "NO");
 			}
 			// JPEG 2000 Files
 			else if ((strings[0] == "JPEG 2000") && (strings[1] != "NO"))
 			{
-				opencv_formats["JP2"] = true;
+				supported_formats["JP2"] = true;
 			}
 			// WebP
 			else if ((strings[0] == "WEBP") && (strings[1] != "NO"))
 			{
-				opencv_formats["WEBP"] = true;
+				supported_formats["WEBP"] = true;
 			}
 			// TIFF Files
 			else if ((strings[0] == "TIFF") && (strings[1] != "NO"))
 			{
-				opencv_formats["TIF"] = true;
-				opencv_formats["TIFF"] = true;
+				supported_formats["TIF"] = true;
+				supported_formats["TIFF"] = true;
 			}
 		}
 	}
 	// Windows Bitmaps (Always Supported)
-	opencv_formats["BMP"] = true;
-	opencv_formats["DIB"] = true;
+	supported_formats["BMP"] = true;
+	supported_formats["DIB"] = true;
 	
 	// Portable Image Format (Always Supported)
-	opencv_formats["PBM"] = true;
-	opencv_formats["PGM"] = true;
-	opencv_formats["PPM"] = true;
-	opencv_formats["PXM"] = true;
-	opencv_formats["PNM"] = true;
+	supported_formats["PBM"] = true;
+	supported_formats["PGM"] = true;
+	supported_formats["PPM"] = true;
+	supported_formats["PXM"] = true;
+	supported_formats["PNM"] = true;
 	
 	// Sun Rasters (Always Supported)
-	opencv_formats["SR"] = true;
-	opencv_formats["RAS"] = true;
+	supported_formats["SR"] = true;
+	supported_formats["RAS"] = true;
 	
 	// Radiance HDR (Always Supported)
-	opencv_formats["HDR"] = true;
-	opencv_formats["PIC"] = true;
+	supported_formats["HDR"] = true;
+	supported_formats["PIC"] = true;
 	
 	// OpenEXR Image Files
-	opencv_formats["EXR"] = true;
+	supported_formats["EXR"] = true;
 }
 void display_supported_formats()
 {
@@ -478,7 +478,7 @@ void display_supported_formats()
 			" OpenCV is disabled (recompile to enable), so only the default formats can be used"
 	#endif
 			 << std::endl ;
-	for (auto const& x : opencv_formats)
+	for (auto const& x : supported_formats)
 	{
 		std::cout << "\t" << std::setw(4) << x.first << " -> " << (x.second ? "Yes" : "No") << std::endl ;
 	}
