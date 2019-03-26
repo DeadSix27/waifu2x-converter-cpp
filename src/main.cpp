@@ -396,7 +396,7 @@ void convert_fileW(ConvInfo info, fs::path inputName, fs::path output) {
 
 	
 //check for opencv formats
-void check_opencv_formats()
+void parse_supported_cv_formats()
 {
 	#ifndef HAVE_OPENCV
 		// Only default formats are supported
@@ -580,13 +580,13 @@ int wmain(void){
 			return 0;
 		}
 		else if ((wcscmp(argv_w[ai], L"--list-opencv-formats") == 0)) {
-			check_opencv_formats();
 			debug_show_opencv_formats();
+			parse_supported_cv_formats();
 			return 0;
 		}
 	}
 	
-	check_opencv_formats();
+	parse_supported_cv_formats();
 	
 	// definition of command line arguments
 	TCLAP::CmdLine cmd("waifu2x OpenCV Fork - https://github.com/DeadSix27/waifu2x-converter-cpp", ' ', std::string(GIT_TAG) + " (" + GIT_BRANCH + "-" + GIT_COMMIT_HASH + ")", true);
@@ -859,13 +859,13 @@ int main(int argc, char** argv) {
 			return 0;
 		}
 		if (strcmp(argv[ai], "--list-opencv-formats") == 0) {
-			check_opencv_formats();
 			debug_show_opencv_formats();
+			parse_supported_cv_formats();
 			return 0;
 		}
 	}
 	
-	check_opencv_formats();
+	parse_supported_cv_formats();
 
 	// definition of command line arguments
 	TCLAP::CmdLine cmd("waifu2x OpenCV Fork - https://github.com/DeadSix27/waifu2x-converter-cpp", ' ', std::string(GIT_TAG) + " (" + GIT_BRANCH + "-" + GIT_COMMIT_HASH + ")", true);
