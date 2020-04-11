@@ -10,6 +10,7 @@ out/
 release/
 debug/
 src/*.o
+.idea/
 waifu2x-converter-cpp
 *.s
 *.ii

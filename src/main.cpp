@@ -766,6 +766,9 @@ int main(int argc, char** argv)
 	TCLAP::SwitchArg cmdForceOpenCL("", "force-OpenCL", "force to use OpenCL on Intel Platform",
 		cmd, false
 	);
+    TCLAP::SwitchArg cmdResume("z", "resume", "Ignores files in input stream that have already been converted",
+                                    cmd, false
+    );
 	TCLAP::SwitchArg cmdDisableGPU("", "disable-gpu", "disable GPU",
 		cmd, false
 	);
@@ -964,6 +967,7 @@ int main(int argc, char** argv)
 	int numFilesProcessed = 0;
 	int numErrors = 0;
 	int numSkipped = 0;
+	int numIgnored = 0;
 	
 	//Build files list
 	std::deque<fs::path> files_list;
@@ -1033,7 +1037,15 @@ int main(int argc, char** argv)
 	for (auto &fn : files_list)
 	{
 		++numFilesProcessed;
-		double time_file_start = getsec();
+        _tstring outputName = generate_output_location(convInfo.origPath, fs::absolute(fn).TSTRING_METHOD(), output.TSTRING_METHOD(), convInfo.postfix, convInfo.outputFormat, convInfo.outputOption);
+        if(cmdResume.getValue() && fs::exists(outputName)){
+            if (log_level >= 1) {
+                printf("Ignored %s\n", fn.c_str());
+            }
+            numIgnored++;
+            continue;
+        }
+        double time_file_start = getsec();
 			
 		if (log_level >= 1)
 		{
@@ -1056,7 +1068,7 @@ int main(int argc, char** argv)
 
 		try
 		{
-			convert_file(convInfo, fn, output);
+            convert_file(convInfo, fn, output);
 		}
 		catch (const std::exception& e)
 		{
@@ -1103,11 +1115,12 @@ int main(int argc, char** argv)
 		double gflops_proc = (converter->flops.flop / (1000.0*1000.0*1000.0)) / converter->flops.filter_sec;
 		double gflops_all = (converter->flops.flop / (1000.0*1000.0*1000.0)) / (time_end - time_start);
 
-		printf("Finished processing %d files%s%.3fsecs total, filter: %.3fsecs; %d files skipped, %d files errored. [GFLOPS: %7.2f, GFLOPS-Filter: %7.2f]\n",
+		printf("Finished processing %d files%s%.3fsecs total, filter: %.3fsecs; %d files ignored, %d files skipped, %d files errored. [GFLOPS: %7.2f, GFLOPS-Filter: %7.2f]\n",
 			numFilesProcessed,
 			(log_level >=2 ? "\nTook: " : ", took: "),
 			(time_end - time_start),
 			converter->flops.filter_sec,
+			numIgnored,
 			numSkipped,
 			numErrors,
 			gflops_all,
