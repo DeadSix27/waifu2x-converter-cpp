@@ -558,10 +558,19 @@ namespace w2xc
 						{
 							std::string user_folder("/tmp/.waifu2x");
 							char *home_dir = getenv ("HOME");
+							char *xdg_data_home = getenv ("XDG_DATA_HOME");
 
-							if (home_dir != NULL)
+							if (xdg_data_home != NULL)
 							{
-								user_folder = std::string(home_dir) + "/.waifu2x";
+								user_folder = std::string(xdg_data_home) + "/waifu2x";
+							}
+
+							if (xdg_data_home == NULL)
+							{
+								if (home_dir != NULL)
+								{
+									user_folder = std::string(home_dir) + "/.local/share/waifu2x";
+								}
 							}
 							
 							if (!fs::exists(user_folder))
