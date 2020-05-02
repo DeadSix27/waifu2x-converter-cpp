@@ -412,36 +412,50 @@ namespace w2xc
 		std::string bin_path = std::string(self_path) + "/" + dev_nameStr + ".bin";
 
 #if !defined(_WIN32)
-		if (errno == EACCES || errno == EROFS)
-		{
-			std::string user_folder("/tmp/.waifu2x");
-			char *home_dir = getenv ("HOME");
-			char *xdg_data_home = getenv ("XDG_DATA_HOME");
-
-			if (xdg_data_home != NULL)
+	FILE *fp = NULL;
+	while (fp == NULL)
+	{
+		fp = fopen(bin_path.c_str(), "wb");
+			if (fp == NULL)
 			{
-				user_folder = std::string(xdg_data_home) + "/waifu2x";
-			}
-			else if (home_dir != NULL)
-			{
-				user_folder = std::string(home_dir) + "/.local/share/waifu2x";
-			}
-
-			if (!fs::exists(user_folder))
-			{
-				try
+				if (errno == EACCES || errno == EROFS)
 				{
-					fs::create_directory(user_folder);
-				}
-				catch (fs::filesystem_error& e)
-				{
-					printf("Error creating directory: %s\n", e.what());
-					exit(EXIT_FAILURE);
+					std::string user_folder("/tmp/.waifu2x");
+					char *home_dir = getenv ("HOME");
+					char *xdg_data_home = getenv ("XDG_DATA_HOME");
+
+					if (xdg_data_home != NULL)
+					{
+						user_folder = std::string(xdg_data_home) + "/waifu2x";
+					}
+					else if (home_dir != NULL)
+					{
+						user_folder = std::string(home_dir) + "/.local/share/waifu2x";
+					}
+
+					if (!fs::exists(user_folder))
+					{
+						try
+						{
+							fs::create_directory(user_folder);
+						}
+						catch (fs::filesystem_error& e)
+						{
+							printf("Error creating directory: %s\n", e.what());
+							exit(EXIT_FAILURE);
+						}
+					}
+
+					bin_path = user_folder + "/" + dev_nameStr + ".bin";
 				}
 			}
+	}
 
-			bin_path = user_folder + "/" + dev_nameStr + ".bin";
-		}
+	if (fp)
+	{
+		fclose(fp);
+	}
+
 #endif
 
 		FILE *binfp = fopen(bin_path.c_str(), "rb");
