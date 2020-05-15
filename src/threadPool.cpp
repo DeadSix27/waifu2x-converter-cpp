@@ -21,6 +21,9 @@
 * SOFTWARE.
 */
 
+#if defined __linux
+#include <stdio.h>
+#endif
 #include <thread>
 #include <atomic>
 #include "threadPool.hpp"
@@ -82,7 +85,6 @@ namespace w2xc
 
 #include <unistd.h>
 #include <sys/eventfd.h>
-#include <stdio.h>
 
 	int create_event()
 	{
