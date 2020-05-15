@@ -82,6 +82,7 @@ namespace w2xc
 
 #include <unistd.h>
 #include <sys/eventfd.h>
+#include <stdio.h>
 
 	int create_event()
 	{
