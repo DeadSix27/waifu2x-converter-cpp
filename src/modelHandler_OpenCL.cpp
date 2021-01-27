@@ -437,6 +437,36 @@ namespace w2xc
 		
 		std::string bin_path = std::string(self_path) + "/" + dev_nameStr + ".bin";
 
+#if !defined(_WIN32)
+		std::string user_folder("/tmp/.waifu2x");
+		char *home_dir = getenv ("HOME");
+		char *xdg_data_home = getenv ("XDG_DATA_HOME");
+
+		if (xdg_data_home != NULL)
+		{
+			user_folder = std::string(xdg_data_home) + "/waifu2x";
+		}
+		else if (home_dir != NULL)
+		{
+			user_folder = std::string(home_dir) + "/.local/share/waifu2x";
+		}
+
+		if (!fs::exists(user_folder))
+		{
+			try
+			{
+				fs::create_directory(user_folder);
+			}
+			catch (fs::filesystem_error& e)
+			{
+				printf("Error creating directory: %s\n", e.what());
+				exit(EXIT_FAILURE);
+			}
+		}
+
+		bin_path = user_folder + "/" + dev_nameStr + ".bin";
+#endif
+
 		FILE *binfp = fopen(bin_path.c_str(), "rb");
 		if (binfp)
 		{
@@ -580,41 +610,11 @@ namespace w2xc
 				if (fp == NULL)
 				{
 #if !defined(_WIN32)
-						if (errno == EACCES || errno == EROFS)
-						{
-							std::string user_folder("/tmp/.waifu2x");
-							char *home_dir = getenv ("HOME");
-
-							if (home_dir != NULL)
-							{
-								user_folder = std::string(home_dir) + "/.waifu2x";
-							}
-							
-							if (!fs::exists(user_folder))
-							{
-								try
-								{
-									fs::create_directory(user_folder);
-								}
-								catch (fs::filesystem_error& e)
-								{
-									printf("Error creating directory: %s\n", e.what());
-									exit(EXIT_FAILURE);
-								}
-							}
-
-							bin_path = user_folder + "/" + dev_nameStr + ".bin";
-							fp = fopen(bin_path.c_str(), "wb");
-							printf("Writing OpenCL-Binary to: %s\n",bin_path.c_str());
-						}
-						else
-						{
-							printf("Error opening file %s: [%d] %s\n",bin_path.c_str(),errno,strerror(errno));
-							exit (EXIT_FAILURE);
-						}
+		fp = fopen(bin_path.c_str(), "wb");
+		printf("Writing OpenCL-Binary to: %s\n",bin_path.c_str());
 #else
-						printf("Error opening file %s: [%d] %s\n",bin_path.c_str(),errno,strerror(errno));
-						exit (EXIT_FAILURE);
+		printf("Error opening file %s: [%d] %s\n",bin_path.c_str(),errno,strerror(errno));
+		exit (EXIT_FAILURE);
 #endif
 				}
 				else
