@@ -37,12 +37,12 @@ This software was originally made by @WL-Amigo and has been improved a lot over 
 
 ## Supported platforms
 
- - Linux
- - LInux (ARM)
- - Windows 7+  
- - MacOS?
-   - This is not officially supported but see here for more information: [#20](https://github.com/DeadSix27/waifu2x-converter-cpp/issues/20)
- 
+- Linux
+- LInux (ARM)
+- Windows 7+
+- MacOS?
+  - This is not officially supported but see here for more information: [#20](https://github.com/DeadSix27/waifu2x-converter-cpp/issues/20)
+
 ## Build dependencies
 
  - [GCC 5](https://gcc.gnu.org/) (Linux)
@@ -64,6 +64,13 @@ See [nagadomi/waifu2x](https://github.com/nagadomi/waifu2x#train-your-own-model)
 
 Usage of this program can be seen by executing `waifu2x-converter-cpp --help`
 If you are on Windows and prefer GUIs, see [here](#windows-downloads).
+
+## Docker
+
+```
+docker build -t your-image .
+docker run --rm -v $(pwd):/work -it your-image -i /work/noisy.png
+```
 
 ## Notes:
 
